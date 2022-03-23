@@ -31,70 +31,90 @@ class NoteListState extends State<NoteList> {
       updateListView();
     }
 
-    Widget myAppBar() {
-      return AppBar(
-        title: Text('Notes', style: Theme.of(context).textTheme.headline5),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.white,
-        leading: noteList.isEmpty
-            ? Container()
-            : IconButton(
-                icon: const Icon(
-                  Icons.search,
-                  color: Colors.black,
-                ),
-                onPressed: () async {
-                  final Note result = await showSearch(
-                      context: context, delegate: NotesSearch(notes: noteList));
-                  if (result != null) {
-                    navigateToDetail(result, 'Edit Note');
-                  }
-                },
-              ),
-        actions: <Widget>[
-          noteList.isEmpty
-              ? Container()
-              : IconButton(
-                  icon: Icon(
-                    axisCount == 2 ? Icons.list : Icons.grid_on,
-                    color: Colors.black,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      axisCount = axisCount == 2 ? 4 : 2;
-                    });
-                  },
-                )
-        ],
-      );
-    }
-
     return Scaffold(
-      appBar: myAppBar(),
-      body: noteList.isEmpty
-          ? Container(
-              color: Colors.white,
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text('Click on the add button to add a new note!',
-                      style: Theme.of(context).textTheme.bodyText2),
-                ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 10, bottom: 8, right: 8, left: 8),
+              child: Row(
+                children: [
+                  const SizedBox(width: 2),
+                  const Text(
+                    " My Notes",
+                    style: TextStyle(fontSize: 40, fontWeight: FontWeight.w400),
+                  ),
+                  const Spacer(),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: noteList.isEmpty
+                            ? Container()
+                            : IconButton(
+                                icon: const Icon(
+                                  Icons.search,
+                                ),
+                                onPressed: () async {
+                                  final Note result = await showSearch(
+                                      context: context,
+                                      delegate: NotesSearch(notes: noteList));
+                                  if (result != null) {
+                                    navigateToDetail(result, 'Edit Note');
+                                  }
+                                },
+                              ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: noteList.isEmpty
+                            ? Container()
+                            : IconButton(
+                                icon: Icon(
+                                  axisCount == 2 ? Icons.list : Icons.grid_on,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    axisCount = axisCount == 2 ? 4 : 2;
+                                  });
+                                },
+                              ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height / 15),
+            Expanded(
+              child: SizedBox(
+                child: noteList.isEmpty
+                    ? Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(
+                              'Click on the add button to add a new note!',
+                              style: Theme.of(context).textTheme.bodyText2),
+                        ),
+                      )
+                    : SizedBox(
+                        child: getNotesList(),
+                      ),
               ),
             )
-          : Container(
-              color: Colors.white,
-              child: getNotesList(),
-            ),
+          ],
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           navigateToDetail(Note('', '', 3, 0), 'Add Note');
         },
-        tooltip: 'Add Note',
-        shape: const CircleBorder(side: BorderSide(color: Colors.black, width: 2.0)),
-        child: const Icon(Icons.add, color: Colors.black),
-        backgroundColor: Colors.white,
+        tooltip: 'Take a  note',
+        shape: const CircleBorder(
+            side: BorderSide(color: Colors.black, width: 2.0)),
+        child: const Icon(Icons.add),
+        backgroundColor: const Color(0xffc46210),
       ),
     );
   }
@@ -113,9 +133,10 @@ class NoteListState extends State<NoteList> {
           child: Container(
             padding: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
-                color: colors[noteList[index].color],
-                border: Border.all(width: 2, color: Colors.black),
-                borderRadius: BorderRadius.circular(8.0)),
+              color: colors[noteList[index].color],
+              border: Border.all(width: 2, color: Colors.black),
+              borderRadius: BorderRadius.circular(8.0),
+            ),
             child: Column(
               children: <Widget>[
                 Row(
@@ -133,8 +154,10 @@ class NoteListState extends State<NoteList> {
                     Text(
                       getPriorityText(noteList[index].priority),
                       style: TextStyle(
-                          color:
-                              getPriorityColor(noteList[index].priority)),
+                        color: getPriorityColor(
+                          noteList[index].priority,
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -145,10 +168,9 @@ class NoteListState extends State<NoteList> {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                            noteList[index].description == null
-                                ? ''
-                                : noteList[index].description,
-                            style: Theme.of(context).textTheme.bodyText1),
+                          noteList[index].description ?? '',
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
                       )
                     ],
                   ),
@@ -156,8 +178,10 @@ class NoteListState extends State<NoteList> {
                 Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      Text(noteList[index].date,
-                          style: Theme.of(context).textTheme.subtitle2),
+                      Text(
+                        noteList[index].date,
+                        style: Theme.of(context).textTheme.subtitle2,
+                      ),
                     ])
               ],
             ),
@@ -205,19 +229,6 @@ class NoteListState extends State<NoteList> {
         return '!';
     }
   }
-
-  // void _delete(BuildContext context, Note note) async {
-  //   int result = await databaseHelper.deleteNote(note.id);
-  //   if (result != 0) {
-  //     _showSnackBar(context, 'Note Deleted Successfully');
-  //     updateListView();
-  //   }
-  // }
-
-  // void _showSnackBar(BuildContext context, String message) {
-  //   final snackBar = SnackBar(content: Text(message));
-  //   Scaffold.of(context).showSnackBar(snackBar);
-  // }
 
   void navigateToDetail(Note note, String title) async {
     bool result = await Navigator.push(context,

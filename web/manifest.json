@@ -1,6 +1,6 @@
 {
-    "name": "notes_taker",
-    "short_name": "notes_taker",
+    "name": "noter",
+    "short_name": "noter",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

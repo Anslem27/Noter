@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//import 'package:notes_taker/theme/app_theme.dart';
 
 import 'screens/note_list.dart';
 
@@ -11,34 +12,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'NoteKeeper',
+      /*  theme: NoterTheme.lightTheme,
+      darkTheme: NoterTheme.darkTheme, */
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-        textTheme: const TextTheme(
-          headline5: TextStyle(
-              fontFamily: 'Sans',
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-              fontSize: 24),
-          bodyText2: TextStyle(
-              fontFamily: 'Sans',
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-              fontSize: 20),
-          bodyText1: TextStyle(
-              fontFamily: 'Sans',
-              fontWeight: FontWeight.normal,
-              color: Colors.black,
-              fontSize: 18),
-          subtitle2: TextStyle(
-              fontFamily: 'Sans',
-              fontWeight: FontWeight.normal,
-              color: Colors.black,
-              fontSize: 14),
-        ),
-      ),
       home: NoteList(),
     );
   }

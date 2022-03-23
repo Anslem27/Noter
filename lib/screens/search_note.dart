@@ -25,6 +25,7 @@ class NotesSearch extends SearchDelegate<Note> {
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
+        splashRadius: 23,
         icon: const Icon(
           Icons.clear,
           color: Colors.black,
@@ -39,9 +40,9 @@ class NotesSearch extends SearchDelegate<Note> {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-      icon: const Icon(
-        Icons.arrow_back,
-        color: Colors.black,
+      splashRadius: 24,
+      icon: Icon(
+        Icons.adaptive.arrow_back,
       ),
       onPressed: () {
         close(context, null);
@@ -65,12 +66,10 @@ class NotesSearch extends SearchDelegate<Note> {
               child: Icon(
                 Icons.search,
                 size: 50,
-                color: Colors.black,
               ),
             ),
             Text(
               'Enter a note to search.',
-              style: TextStyle(color: Colors.black),
             )
           ],
         )),
@@ -82,43 +81,44 @@ class NotesSearch extends SearchDelegate<Note> {
         return Container(
           color: Colors.white,
           child: Center(
-              child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const <Widget>[
-              SizedBox(
-                width: 50,
-                height: 50,
-                child: Icon(
-                  Icons.sentiment_dissatisfied,
-                  size: 50,
-                  color: Colors.black,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const <Widget>[
+                SizedBox(
+                  width: 50,
+                  height: 50,
+                  //TODO: change with proly an illustration.
+                  child: Icon(
+                    Icons.sentiment_dissatisfied,
+                    size: 50,
+                  ),
                 ),
-              ),
-              Text(
-                'No results found',
-                style: TextStyle(color: Colors.black),
-              )
-            ],
-          )),
+                Text(
+                  'No results found',
+                )
+              ],
+            ),
+          ),
         );
       } else {
         return Container(
           color: Colors.white,
+          // TODO: return a card like search option
           child: ListView.builder(
-            itemCount: filteredNotes.length == null ? 0 : filteredNotes.length,
+            itemCount: filteredNotes.length ?? 0,
             itemBuilder: (context, index) {
               return ListTile(
                 leading: const Icon(
-                  Icons.note,
-                  color: Colors.black,
+                  //TODO: Add a better icon or image
+                  Icons.note_alt_rounded,
                 ),
                 title: Text(
                   filteredNotes[index].title,
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0,
-                      color: Colors.black),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0,
+                  ),
                 ),
                 subtitle: Text(
                   filteredNotes[index].description,
@@ -129,6 +129,7 @@ class NotesSearch extends SearchDelegate<Note> {
                 },
               );
             },
+            
           ),
         );
       }
@@ -161,12 +162,10 @@ class NotesSearch extends SearchDelegate<Note> {
               child: Icon(
                 Icons.search,
                 size: 50,
-                color: Colors.black,
               ),
             ),
             Text(
               'Enter a note to search.',
-              style: TextStyle(color: Colors.black),
             )
           ],
         )),
@@ -174,9 +173,8 @@ class NotesSearch extends SearchDelegate<Note> {
     } else {
       filteredNotes = [];
       getFilteredList(notes);
-      if (filteredNotes.length == 0) {
-        return Container(
-          color: Colors.white,
+      if (filteredNotes.isEmpty) {
+        return SizedBox(
           child: Center(
               child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -188,12 +186,10 @@ class NotesSearch extends SearchDelegate<Note> {
                 child: Icon(
                   Icons.sentiment_dissatisfied,
                   size: 50,
-                  color: Colors.black,
                 ),
               ),
               Text(
                 'No results found',
-                style: TextStyle(color: Colors.black),
               )
             ],
           )),
@@ -202,19 +198,19 @@ class NotesSearch extends SearchDelegate<Note> {
         return Container(
           color: Colors.white,
           child: ListView.builder(
-            itemCount: filteredNotes.length == null ? 0 : filteredNotes.length,
+            itemCount: filteredNotes.length ?? 0,
             itemBuilder: (context, index) {
+              //TODO: return a grid list.
               return ListTile(
                 leading: const Icon(
-                  Icons.note,
-                  color: Colors.black,
+                  Icons.note_alt_rounded,
                 ),
                 title: Text(
                   filteredNotes[index].title,
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0,
-                      color: Colors.black),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0,
+                  ),
                 ),
                 subtitle: Text(
                   filteredNotes[index].description,

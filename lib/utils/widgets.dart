@@ -16,7 +16,8 @@ List<Color> colors = [
 class PriorityPicker extends StatefulWidget {
   final Function(int) onTap;
   final int selectedIndex;
-  const PriorityPicker({Key key, this.onTap, this.selectedIndex}) : super(key: key);
+  const PriorityPicker({Key key, this.onTap, this.selectedIndex})
+      : super(key: key);
   @override
   _PriorityPickerState createState() => _PriorityPickerState();
 }
@@ -24,12 +25,14 @@ class PriorityPicker extends StatefulWidget {
 class _PriorityPickerState extends State<PriorityPicker> {
   int selectedIndex;
   List<String> priorityText = ['Low', 'High', 'Very High'];
-  List<Color> priorityColor = [Colors.green, Colors.lightGreen, Colors.red];
+  List<Color> priorityColor = [
+    Colors.greenAccent,
+    Colors.blueAccent,
+    Colors.redAccent
+  ];
   @override
   Widget build(BuildContext context) {
-    if (selectedIndex == null) {
-      selectedIndex = widget.selectedIndex;
-    }
+    selectedIndex ??= widget.selectedIndex;
     double width = MediaQuery.of(context).size.width;
     return SizedBox(
       width: width,
@@ -65,7 +68,7 @@ class _PriorityPickerState extends State<PriorityPicker> {
                     borderRadius: BorderRadius.circular(8.0),
                     border: selectedIndex == index
                         ? Border.all(width: 2, color: Colors.black)
-                        : Border.all(width: 0,color: Colors.transparent)),
+                        : Border.all(width: 0, color: Colors.transparent)),
               ),
             ),
           );
@@ -78,7 +81,8 @@ class _PriorityPickerState extends State<PriorityPicker> {
 class ColorPicker extends StatefulWidget {
   final Function(int) onTap;
   final int selectedIndex;
-  const ColorPicker({Key key, this.onTap, this.selectedIndex}) : super(key: key);
+  const ColorPicker({Key key, this.onTap, this.selectedIndex})
+      : super(key: key);
   @override
   _ColorPickerState createState() => _ColorPickerState();
 }
@@ -88,9 +92,7 @@ class _ColorPickerState extends State<ColorPicker> {
 
   @override
   Widget build(BuildContext context) {
-    if (selectedIndex == null) {
-      selectedIndex = widget.selectedIndex;
-    }
+    selectedIndex ??= widget.selectedIndex;
     double width = MediaQuery.of(context).size.width;
     return SizedBox(
       width: width,

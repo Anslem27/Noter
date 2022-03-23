@@ -19,6 +19,7 @@ class Note {
 
   int get priority => _priority;
   int get color => _color;
+  // ignore: unnecessary_getters_setters
   String get date => _date;
 
   set title(String newTitle) {
