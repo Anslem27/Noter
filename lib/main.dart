@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
-//import 'package:notes_taker/theme/app_theme.dart';
+import 'package:notes_taker/notes_navigation.dart';
 
-import 'screens/note_list.dart';
-
+//! Test a particualar file.
 void main() {
-  runApp(const MyApp());
+  runApp(const Noter());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key key}) : super(key: key);
+class Noter extends StatelessWidget {
+  const Noter({Key? key}) : super(key: key);
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'NoteKeeper',
-      /*  theme: NoterTheme.lightTheme,
-      darkTheme: NoterTheme.darkTheme, */
       debugShowCheckedModeBanner: false,
-      home: NoteList(),
+      title: 'Noter',
+      home: NestNotes(),
     );
   }
 }
