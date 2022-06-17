@@ -47,12 +47,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late SharedPreferences sharedPreferences;
-  /*  bool isAppLogged = false;
-  String userFullname = "";
-  String userId = "";
-  String userEmail = "";
-  Storage storage = Storage();
-  String backupPath = ""; */
   late ViewType _viewType;
   ViewType viewType = ViewType.Tile;
   ScrollController scrollController = ScrollController();
@@ -81,7 +75,6 @@ class _HomePageState extends State<HomePage> {
   getPref() async {
     sharedPreferences = await SharedPreferences.getInstance();
     setState(() {
-      // isAppLogged = sharedPreferences.getBool("is_logged") ?? false;
       bool isTile = sharedPreferences.getBool("is_tile") ?? false;
       _viewType = isTile ? ViewType.Tile : ViewType.Grid;
       viewType = isTile ? ViewType.Tile : ViewType.Grid;
@@ -192,23 +185,27 @@ class _HomePageState extends State<HomePage> {
                   top: 15.0,
                 ),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        IconButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          tooltip: "Back",
-                          //?remeber adaptive back button for full native experience.
-                          icon: Icon(Icons.adaptive.arrow_back),
-                          splashRadius: 24,
-                        ),
                         Text(
-                          "My notes",
+                          "Noter",
                           textAlign: TextAlign.start,
                           style: GoogleFonts.roboto(
                             letterSpacing: 0.5,
-                            fontSize: 33,
+                            fontSize: 40,
                             fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        const Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: IconButton(
+                            splashRadius: 24,
+                            onPressed: () {},
+                            icon: const Icon(Iconsax.menu),
                           ),
                         ),
                       ],
@@ -301,11 +298,8 @@ class _HomePageState extends State<HomePage> {
                 ),
               );
             },
-            icon: const Icon(
-              Iconsax.search_normal,
-              size: 25,
-              color: Colors.greenAccent
-            ),
+            icon: const Icon(Iconsax.search_normal,
+                size: 25, color: Colors.greenAccent),
           ),
         ),
         //labels
@@ -315,7 +309,6 @@ class _HomePageState extends State<HomePage> {
           child: IconButton(
             splashRadius: 24,
             onPressed: () {
-              //Scaffold.of(context).openEndDrawer();
               openLabelEditor();
             },
             icon: const Icon(
@@ -325,7 +318,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        //archieve page
         CircleAvatar(
           radius: 25,
           backgroundColor: darkModeOn ? Colors.grey.shade800 : Colors.white,
@@ -518,29 +510,6 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  /*  Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ListTile(
-                        //tileColor: constantAqua,
-                        trailing: const Icon(Iconsax.tag),
-                        title: const Text(
-                          'Manage Labels',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 17,
-                          ),
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
-                          openLabelEditor();
-                        },
-                        dense: true,
-                      ),
-                    ),
-                  ), */
                 ],
               ),
             ),
@@ -1026,7 +995,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       const Padding(
-                        padding:  EdgeInsets.all(10),
+                        padding: EdgeInsets.all(10),
                         child: Text('Are you sure you want to delete?'),
                       ),
                       Row(
@@ -1036,7 +1005,8 @@ class _HomePageState extends State<HomePage> {
                               padding: const EdgeInsets.all(10),
                               child: OutlinedButton(
                                 style: OutlinedButton.styleFrom(
-                                    primary: const Color.fromARGB(255, 204, 118, 112),
+                                    primary: const Color.fromARGB(
+                                        255, 204, 118, 112),
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(15))),
@@ -1050,7 +1020,8 @@ class _HomePageState extends State<HomePage> {
                               padding: const EdgeInsets.all(10),
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    primary: const Color.fromARGB(255, 204, 118, 112),
+                                    primary: const Color.fromARGB(
+                                        255, 204, 118, 112),
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(15))),
